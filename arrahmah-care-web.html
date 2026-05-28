@@ -1,0 +1,1539 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ArRahmah Care — Zakat & Sedekah Terpercaya</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════
+   CSS VARIABLES & RESET
+═══════════════════════════════════════════════ */
+:root {
+  --sky:       #0EA5E9;
+  --sky-deep:  #0369A1;
+  --sky-light: #E0F2FE;
+  --sky-pale:  #F0F9FF;
+  --gold:      #C9912A;
+  --gold-lt:   #F5E6C8;
+  --gold-pale: #FDFAF3;
+  --white:     #FFFFFF;
+  --ink:       #0F1923;
+  --muted:     #64748B;
+  --border:    #E2EAF0;
+  --radius:    16px;
+  --radius-lg: 28px;
+  --shadow-soft: 0 4px 32px rgba(14,165,233,0.08);
+  --shadow-card: 0 2px 16px rgba(15,25,35,0.07);
+  --transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 400;
+  color: var(--ink);
+  background: var(--white);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+h1,h2,h3,h4 { font-family: 'Playfair Display', serif; line-height: 1.22; }
+
+img { max-width: 100%; display: block; }
+a { text-decoration: none; color: inherit; }
+
+/* ═══════════════════════════════════════════════
+   UTILITY CLASSES
+═══════════════════════════════════════════════ */
+.container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+.section { padding: 96px 0; }
+.section-sm { padding: 64px 0; }
+.tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 14px; border-radius: 999px;
+  font-size: 11.5px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+}
+.tag-sky  { background: var(--sky-light); color: var(--sky-deep); }
+.tag-gold { background: var(--gold-lt);   color: var(--gold); }
+.text-center { text-align: center; }
+.text-muted  { color: var(--muted); }
+
+/* BUTTONS */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 30px; border-radius: 999px;
+  font-size: 15px; font-weight: 600; font-family: 'Plus Jakarta Sans', sans-serif;
+  cursor: pointer; border: none; transition: var(--transition); letter-spacing: .01em;
+  white-space: nowrap;
+}
+.btn-primary {
+  background: var(--sky); color: var(--white);
+  box-shadow: 0 4px 20px rgba(14,165,233,0.35);
+}
+.btn-primary:hover { background: var(--sky-deep); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(14,165,233,0.45); }
+.btn-gold {
+  background: var(--gold); color: var(--white);
+  box-shadow: 0 4px 20px rgba(201,145,42,0.30);
+}
+.btn-gold:hover { background: #a8761f; transform: translateY(-2px); }
+.btn-outline {
+  background: transparent; color: var(--sky-deep);
+  border: 2px solid var(--sky); padding: 12px 28px;
+}
+.btn-outline:hover { background: var(--sky); color: var(--white); }
+.btn-outline-white {
+  background: transparent; color: var(--white);
+  border: 2px solid rgba(255,255,255,0.55); padding: 12px 28px;
+}
+.btn-outline-white:hover { background: rgba(255,255,255,0.15); }
+
+/* ═══════════════════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════════════════ */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 18px 0;
+  background: rgba(255,255,255,0.94);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid transparent;
+  transition: var(--transition);
+}
+.nav.scrolled {
+  border-bottom-color: var(--border);
+  padding: 12px 0;
+  box-shadow: 0 2px 24px rgba(14,165,233,0.07);
+}
+.nav-inner {
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-logo { display: flex; align-items: center; gap: 12px; }
+.nav-logo-icon {
+  width: 42px; height: 42px; border-radius: 12px;
+  background: linear-gradient(135deg, var(--sky), var(--sky-deep));
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-size: 20px;
+}
+.nav-logo-text strong { display: block; font-family: 'Playfair Display', serif; font-size: 17px; color: var(--ink); }
+.nav-logo-text span { font-size: 11px; color: var(--muted); letter-spacing: .04em; font-weight: 500; }
+.nav-links { display: flex; align-items: center; gap: 32px; }
+.nav-links a { font-size: 14px; font-weight: 500; color: var(--muted); transition: var(--transition); }
+.nav-links a:hover { color: var(--sky-deep); }
+.nav-cta { display: flex; gap: 10px; }
+.hamburger { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
+.hamburger span {
+  display: block; width: 22px; height: 2px;
+  background: var(--ink); margin: 5px 0; border-radius: 2px; transition: var(--transition);
+}
+
+/* ═══════════════════════════════════════════════
+   HERO SECTION
+═══════════════════════════════════════════════ */
+.hero {
+  min-height: 100vh;
+  background: linear-gradient(160deg, var(--sky-deep) 0%, #0284C7 45%, #0EA5E9 100%);
+  position: relative; overflow: hidden;
+  display: flex; align-items: center;
+  padding-top: 80px;
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 70% 40%, rgba(255,255,255,0.06) 0%, transparent 60%),
+    radial-gradient(circle 400px at 20% 80%, rgba(201,145,42,0.12) 0%, transparent 60%);
+}
+
+/* Decorative geometric */
+.hero-geo {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.07;
+  background: white;
+}
+.hero-geo-1 { width: 480px; height: 480px; top: -120px; right: -100px; }
+.hero-geo-2 { width: 220px; height: 220px; bottom: 60px; right: 300px; opacity: 0.04; }
+.hero-geo-3 { width: 80px; height: 80px; top: 180px; left: 60%; opacity: 0.10; }
+
+.hero-inner {
+  position: relative; z-index: 2;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 64px; align-items: center;
+  padding: 80px 0 100px;
+}
+
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,0.14); backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.25);
+  padding: 7px 16px; border-radius: 999px;
+  color: white; font-size: 12.5px; font-weight: 500;
+  margin-bottom: 24px;
+}
+.hero-badge-dot { width: 7px; height: 7px; border-radius: 50%; background: #4ADE80; animation: pulse-dot 2s infinite; }
+@keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.6;transform:scale(1.3)} }
+
+.hero-headline {
+  font-size: clamp(36px, 4.5vw, 58px);
+  color: white;
+  margin-bottom: 20px;
+  line-height: 1.15;
+}
+.hero-headline em { color: var(--gold-lt); font-style: italic; }
+
+.hero-sub {
+  font-size: 17px; color: rgba(255,255,255,0.80);
+  max-width: 490px; margin-bottom: 36px;
+  font-weight: 300; line-height: 1.7;
+}
+
+.hero-cta { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 48px; }
+
+.hero-trust {
+  display: flex; align-items: center; gap: 16px;
+  padding: 14px 20px; border-radius: 14px;
+  background: rgba(255,255,255,0.10); backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.18);
+  max-width: 400px;
+}
+.hero-trust-icon { font-size: 22px; }
+.hero-trust-text { font-size: 12.5px; color: rgba(255,255,255,0.88); line-height: 1.5; }
+.hero-trust-text strong { color: white; font-size: 13px; }
+
+/* Hero Visual */
+.hero-visual { position: relative; }
+.hero-card {
+  background: rgba(255,255,255,0.95);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  box-shadow: 0 24px 72px rgba(0,0,0,0.18);
+  backdrop-filter: blur(8px);
+}
+.hero-card-top {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 24px;
+}
+.hero-card-label { font-size: 12px; font-weight: 600; color: var(--muted); letter-spacing: .05em; text-transform: uppercase; }
+.hero-card-live {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 11.5px; font-weight: 600; color: #16A34A;
+  background: #DCFCE7; padding: 4px 10px; border-radius: 999px;
+}
+.hero-card-live span { width: 6px; height: 6px; border-radius: 50%; background: #16A34A; animation: pulse-dot 2s infinite; }
+
+.hero-stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px; }
+.hero-stat {
+  background: var(--sky-pale); border-radius: 12px;
+  padding: 16px; text-align: center;
+}
+.hero-stat-num { font-family: 'Playfair Display', serif; font-size: 26px; color: var(--sky-deep); font-weight: 700; }
+.hero-stat-lbl { font-size: 11px; color: var(--muted); margin-top: 2px; font-weight: 500; }
+
+.hero-prog-wrap { }
+.hero-prog-header { display: flex; justify-content: space-between; margin-bottom: 6px; }
+.hero-prog-name { font-size: 13px; font-weight: 600; color: var(--ink); }
+.hero-prog-pct { font-size: 13px; font-weight: 700; color: var(--sky-deep); }
+.prog-bar {
+  height: 8px; background: var(--sky-light); border-radius: 999px; overflow: hidden; margin-bottom: 12px;
+}
+.prog-fill {
+  height: 100%; border-radius: 999px;
+  background: linear-gradient(90deg, var(--sky), var(--sky-deep));
+  transition: width 1.5s cubic-bezier(0.4,0,0.2,1);
+}
+.prog-fill-gold { background: linear-gradient(90deg, #F5C842, var(--gold)); }
+
+.hero-floating {
+  position: absolute;
+  background: white; border-radius: 14px;
+  padding: 12px 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  display: flex; align-items: center; gap: 10px;
+}
+.hero-floating-1 { top: -24px; right: -24px; animation: float1 4s ease-in-out infinite; }
+.hero-floating-2 { bottom: -20px; left: -24px; animation: float2 4.5s ease-in-out infinite; }
+@keyframes float1 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+@keyframes float2 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
+.hero-floating-icon { font-size: 22px; }
+.hero-floating-text strong { display: block; font-size: 14px; font-weight: 700; color: var(--ink); }
+.hero-floating-text span { font-size: 11px; color: var(--muted); }
+
+/* ═══════════════════════════════════════════════
+   STATS / IMPACT DASHBOARD
+═══════════════════════════════════════════════ */
+.stats { background: var(--white); }
+.stats-label { margin-bottom: 12px; }
+.stats-heading { font-size: clamp(28px, 3vw, 40px); margin-bottom: 12px; max-width: 560px; margin-left: auto; margin-right: auto; }
+.stats-sub { color: var(--muted); font-size: 16px; max-width: 480px; margin: 0 auto 56px; }
+.stats-note { font-size: 12px; color: var(--muted); margin-top: 32px; }
+.stats-note a { color: var(--sky); font-weight: 600; }
+
+.stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+.stat-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 32px 24px;
+  text-align: center;
+  transition: var(--transition);
+  position: relative; overflow: hidden;
+}
+.stat-card::before {
+  content: ''; position: absolute;
+  bottom: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--sky), var(--sky-deep));
+  transform: scaleX(0); transform-origin: left;
+  transition: var(--transition);
+}
+.stat-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-soft); border-color: var(--sky-light); }
+.stat-card:hover::before { transform: scaleX(1); }
+.stat-icon {
+  width: 52px; height: 52px; border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; margin: 0 auto 16px;
+}
+.stat-icon-sky  { background: var(--sky-light); }
+.stat-icon-gold { background: var(--gold-lt);   }
+.stat-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 38px; font-weight: 700;
+  color: var(--ink); line-height: 1;
+  margin-bottom: 6px;
+}
+.stat-num span { color: var(--sky-deep); }
+.stat-label { font-size: 13.5px; color: var(--muted); font-weight: 500; line-height: 1.4; }
+.stat-period {
+  margin-top: 8px;
+  font-size: 11px; font-weight: 600; color: var(--gold);
+  background: var(--gold-lt); padding: 3px 10px; border-radius: 999px;
+  display: inline-block;
+}
+
+/* Integration comment guide embedded below stats */
+.integration-notice {
+  margin-top: 40px;
+  padding: 20px 24px;
+  background: #F8FAFF;
+  border: 1px dashed #93C5FD;
+  border-radius: var(--radius);
+  text-align: left;
+  display: none; /* Hidden in production – visible in dev mode */
+}
+
+/* ═══════════════════════════════════════════════
+   PROGRAM CARDS
+═══════════════════════════════════════════════ */
+.programs { background: var(--sky-pale); }
+.section-header { margin-bottom: 56px; }
+.section-heading { font-size: clamp(28px, 3vw, 42px); margin: 10px 0 12px; }
+.section-sub { color: var(--muted); font-size: 16px; max-width: 520px; margin: 0 auto; }
+
+.prog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+.prog-grid-row2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; max-width: 760px; margin: 28px auto 0; }
+.prog-card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  transition: var(--transition);
+  display: flex; flex-direction: column;
+}
+.prog-card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(14,165,233,0.14); }
+
+.prog-img {
+  height: 192px; display: flex; align-items: center; justify-content: center;
+  font-size: 56px; position: relative; overflow: hidden;
+}
+.prog-img-1 { background: linear-gradient(135deg, #DBEAFE, #BFDBFE); }
+.prog-img-2 { background: linear-gradient(135deg, #FEF9C3, #FDE68A); }
+.prog-img-3 { background: linear-gradient(135deg, #DCFCE7, #A7F3D0); }
+.prog-img-4 { background: linear-gradient(135deg, #FEE2E2, #FECACA); }
+.prog-img-5 { background: linear-gradient(135deg, #FFF7ED, #FED7AA); }
+.seasonal { background: #FEF3C7; color: #D97706; }
+
+.prog-urgency {
+  position: absolute; top: 14px; right: 14px;
+  padding: 4px 12px; border-radius: 999px;
+  font-size: 11px; font-weight: 700;
+}
+.urgent { background: #FEE2E2; color: #DC2626; }
+.open   { background: #DCFCE7; color: #15803D; }
+
+.prog-body { padding: 24px; flex: 1; display: flex; flex-direction: column; }
+.prog-cat { font-size: 11px; font-weight: 600; color: var(--sky); letter-spacing: .06em; text-transform: uppercase; margin-bottom: 8px; }
+.prog-title { font-size: 19px; margin-bottom: 10px; }
+.prog-desc { font-size: 14px; color: var(--muted); line-height: 1.65; margin-bottom: 20px; flex: 1; }
+
+.prog-progress { margin-bottom: 14px; }
+.prog-progress-header { display: flex; justify-content: space-between; margin-bottom: 7px; }
+.prog-progress-goal { font-size: 12px; color: var(--muted); }
+.prog-progress-pct { font-size: 12px; font-weight: 700; color: var(--sky-deep); }
+.prog-progress-bar { height: 7px; background: var(--sky-light); border-radius: 999px; overflow: hidden; }
+
+.prog-amounts { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 20px; }
+.prog-raised { font-weight: 700; color: var(--ink); }
+.prog-raised span { color: var(--muted); font-weight: 400; font-size: 12px; }
+.prog-target { color: var(--muted); }
+
+.prog-donate-btn {
+  width: 100%; justify-content: center;
+  padding: 13px; font-size: 14.5px;
+}
+
+/* ═══════════════════════════════════════════════
+   IMPACT STORIES
+═══════════════════════════════════════════════ */
+.impact { background: var(--white); }
+.impact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start; }
+.impact-left { }
+.impact-quote {
+  position: relative;
+  background: var(--sky-pale);
+  border-radius: var(--radius-lg);
+  padding: 36px 36px 36px 48px;
+  margin-bottom: 28px;
+  border-left: 4px solid var(--sky);
+}
+.impact-quote::before {
+  content: '"';
+  position: absolute; top: 16px; left: 16px;
+  font-family: 'Playfair Display', serif;
+  font-size: 56px; line-height: 1;
+  color: var(--sky); opacity: 0.35;
+}
+.impact-quote p { font-size: 17px; line-height: 1.75; color: var(--ink); font-style: italic; margin-bottom: 16px; }
+.impact-quote-author { display: flex; align-items: center; gap: 12px; }
+.impact-quote-avatar {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--sky-light), var(--sky));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; color: var(--sky-deep);
+}
+.impact-quote-name { font-weight: 700; font-size: 14px; }
+.impact-quote-role { font-size: 12px; color: var(--muted); }
+
+.impact-story {
+  display: flex; gap: 16px; padding: 20px;
+  border: 1px solid var(--border); border-radius: var(--radius);
+  transition: var(--transition);
+}
+.impact-story:hover { border-color: var(--sky-light); background: var(--sky-pale); }
+.impact-story-icon {
+  width: 48px; height: 48px; border-radius: 12px;
+  background: var(--sky-light); display: flex; align-items: center; justify-content: center;
+  font-size: 22px; flex-shrink: 0;
+}
+.impact-story-title { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+.impact-story-text { font-size: 13px; color: var(--muted); line-height: 1.55; }
+
+.impact-right { }
+.impact-media-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+.impact-media {
+  border-radius: var(--radius);
+  background: var(--sky-light);
+  aspect-ratio: 4/3;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 36px; overflow: hidden; position: relative;
+  cursor: pointer; transition: var(--transition);
+}
+.impact-media:hover { transform: scale(1.02); }
+.impact-media-1 { background: linear-gradient(135deg, #BFDBFE, #7DD3FC); }
+.impact-media-2 { background: linear-gradient(135deg, #A7F3D0, #6EE7B7); }
+.impact-media-3 { background: linear-gradient(135deg, #FDE68A, #FCD34D); }
+.impact-media-4 { background: linear-gradient(135deg, #DDD6FE, #C4B5FD); }
+.impact-media-play {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  background: rgba(0,0,0,0.18);
+}
+.play-btn {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: rgba(255,255,255,0.9);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; color: var(--sky-deep);
+}
+.impact-media-main {
+  grid-column: span 2;
+  aspect-ratio: 16/7;
+  font-size: 48px;
+  background: linear-gradient(135deg, #DBEAFE, #93C5FD);
+}
+
+.impact-counter-strip {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1px; background: var(--border);
+  border-radius: var(--radius); overflow: hidden;
+}
+.impact-counter-item {
+  background: var(--white); padding: 18px 12px; text-align: center;
+}
+.impact-counter-num { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--sky-deep); }
+.impact-counter-lbl { font-size: 11.5px; color: var(--muted); margin-top: 2px; }
+
+/* ═══════════════════════════════════════════════
+   TRUST SECTION
+═══════════════════════════════════════════════ */
+.trust { background: var(--ink); color: white; position: relative; overflow: hidden; }
+.trust::before {
+  content: '';
+  position: absolute; top: 0; right: 0;
+  width: 500px; height: 500px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(14,165,233,0.12), transparent 70%);
+}
+.trust-inner { position: relative; z-index: 2; }
+
+.trust-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+.trust-left { }
+.trust-tag { background: rgba(14,165,233,0.18); color: var(--sky); border: 1px solid rgba(14,165,233,0.3); padding: 5px 14px; border-radius: 999px; font-size: 11.5px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; display: inline-block; margin-bottom: 20px; }
+.trust-heading { font-size: clamp(28px, 3vw, 40px); color: white; margin-bottom: 16px; }
+.trust-para { font-size: 15px; color: rgba(255,255,255,0.68); line-height: 1.75; margin-bottom: 28px; }
+
+.trust-items { display: flex; flex-direction: column; gap: 16px; margin-bottom: 36px; }
+.trust-item { display: flex; gap: 14px; align-items: flex-start; }
+.trust-item-icon {
+  width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0;
+  background: rgba(14,165,233,0.18); display: flex; align-items: center; justify-content: center; font-size: 18px;
+}
+.trust-item-text strong { display: block; font-size: 14px; color: white; margin-bottom: 2px; }
+.trust-item-text span { font-size: 13px; color: rgba(255,255,255,0.55); }
+
+.trust-right { }
+.trust-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.trust-card {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: var(--radius);
+  padding: 24px;
+  transition: var(--transition);
+}
+.trust-card:hover { background: rgba(255,255,255,0.10); border-color: rgba(14,165,233,0.3); }
+.trust-card-icon { font-size: 28px; margin-bottom: 12px; }
+.trust-card-title { font-size: 14px; font-weight: 700; color: white; margin-bottom: 6px; }
+.trust-card-text { font-size: 12.5px; color: rgba(255,255,255,0.5); line-height: 1.55; }
+
+.trust-card-wide {
+  grid-column: span 2;
+  display: flex; align-items: center; gap: 16px;
+  flex-wrap: wrap;
+}
+.trust-card-wide-left strong { display: block; font-size: 14px; color: white; margin-bottom: 4px; }
+.trust-card-wide-left span { font-size: 12px; color: rgba(255,255,255,0.5); }
+.trust-payment-logos { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
+.payment-badge {
+  padding: 7px 14px; border-radius: 8px;
+  background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.15);
+  font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.80);
+  letter-spacing: .03em;
+}
+
+/* Partner logos strip */
+.trust-partners-strip {
+  margin-top: 64px;
+  padding-top: 40px;
+  border-top: 1px solid rgba(255,255,255,0.10);
+}
+.trust-partners-label { font-size: 12px; color: rgba(255,255,255,0.4); letter-spacing: .08em; text-transform: uppercase; text-align: center; margin-bottom: 24px; }
+.trust-partners-logos { display: flex; justify-content: center; flex-wrap: wrap; gap: 24px; }
+.partner-logo {
+  padding: 10px 24px; border-radius: 10px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.10);
+  font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.45);
+  letter-spacing: .04em;
+}
+
+/* ═══════════════════════════════════════════════
+   CTA BANNER
+═══════════════════════════════════════════════ */
+.cta-banner {
+  background: linear-gradient(135deg, var(--sky) 0%, var(--sky-deep) 100%);
+  padding: 80px 0; text-align: center; position: relative; overflow: hidden;
+}
+.cta-banner::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.cta-banner-inner { position: relative; z-index: 2; }
+.cta-banner h2 { font-size: clamp(28px, 3.5vw, 44px); color: white; margin-bottom: 12px; }
+.cta-banner p { font-size: 16px; color: rgba(255,255,255,0.80); margin-bottom: 36px; max-width: 480px; margin-left: auto; margin-right: auto; }
+.cta-banner-btns { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
+
+/* ═══════════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════════ */
+.footer { background: #070D14; color: rgba(255,255,255,0.65); padding: 72px 0 0; }
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.4fr;
+  gap: 48px;
+  margin-bottom: 56px;
+}
+.footer-brand-logo { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+.footer-brand-icon {
+  width: 44px; height: 44px; border-radius: 12px;
+  background: linear-gradient(135deg, var(--sky), var(--sky-deep));
+  display: flex; align-items: center; justify-content: center; font-size: 22px; color: white;
+}
+.footer-brand-text strong { display: block; font-family: 'Playfair Display', serif; font-size: 18px; color: white; }
+.footer-brand-text span { font-size: 11.5px; color: rgba(255,255,255,0.4); }
+.footer-desc { font-size: 13.5px; line-height: 1.75; margin-bottom: 20px; color: rgba(255,255,255,0.5); }
+.footer-social { display: flex; gap: 10px; }
+.social-btn {
+  width: 36px; height: 36px; border-radius: 10px;
+  background: rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center;
+  font-size: 15px; transition: var(--transition);
+}
+.social-btn:hover { background: var(--sky); color: white; transform: translateY(-2px); }
+
+.footer-heading { font-size: 13px; font-weight: 700; color: white; letter-spacing: .05em; text-transform: uppercase; margin-bottom: 18px; }
+.footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.footer-links li a { font-size: 13.5px; color: rgba(255,255,255,0.50); transition: var(--transition); }
+.footer-links li a:hover { color: var(--sky); padding-left: 4px; }
+
+.footer-contact-item { display: flex; gap: 10px; margin-bottom: 14px; font-size: 13.5px; line-height: 1.55; }
+.footer-contact-icon { color: var(--sky); font-size: 16px; margin-top: 1px; flex-shrink: 0; }
+
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.07);
+  padding: 22px 0;
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: gap;
+  font-size: 12.5px; color: rgba(255,255,255,0.30);
+}
+.footer-bottom a { color: var(--sky); }
+.footer-legal { display: flex; gap: 20px; }
+
+/* ═══════════════════════════════════════════════
+   ANIMATIONS
+═══════════════════════════════════════════════ */
+.fade-in {
+  opacity: 0; transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+.fade-in-delay-1 { transition-delay: 0.1s; }
+.fade-in-delay-2 { transition-delay: 0.2s; }
+.fade-in-delay-3 { transition-delay: 0.3s; }
+.fade-in-delay-4 { transition-delay: 0.4s; }
+
+/* ═══════════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════════ */
+@media (max-width: 1024px) {
+  .hero-inner { grid-template-columns: 1fr; gap: 48px; }
+  .hero-visual { display: none; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .trust-grid { grid-template-columns: 1fr; gap: 48px; }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+}
+@media (max-width: 768px) {
+  .section { padding: 64px 0; }
+  .nav-links, .nav-cta { display: none; }
+  .hamburger { display: block; }
+  .hero-inner { padding: 48px 0 64px; }
+  .prog-grid { grid-template-columns: 1fr; }
+  .prog-grid-row2 { grid-template-columns: 1fr; max-width: 100%; }
+  .impact-grid { grid-template-columns: 1fr; }
+  .impact-media-grid { grid-template-columns: 1fr 1fr; }
+  .trust-cards { grid-template-columns: 1fr; }
+  .trust-card-wide { grid-column: span 1; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .footer-bottom { flex-direction: column; gap: 10px; text-align: center; }
+  .hero-cta { flex-direction: column; align-items: flex-start; }
+}
+@media (max-width: 480px) {
+  .stats-grid { grid-template-columns: 1fr; }
+  .hero-stat-grid { grid-template-columns: 1fr; }
+}
+
+/* Mobile nav */
+.mobile-nav {
+  display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 99;
+  background: white; padding: 100px 32px 32px;
+  flex-direction: column; gap: 24px;
+}
+.mobile-nav.open { display: flex; }
+.mobile-nav a { font-size: 22px; font-family: 'Playfair Display', serif; color: var(--ink); border-bottom: 1px solid var(--border); padding-bottom: 18px; }
+.mobile-nav .btn { font-family: 'Plus Jakarta Sans', sans-serif; width: 100%; justify-content: center; font-size: 16px; }
+
+/* ═══════════════════════════════════════════════
+   SCROLL PROGRESS
+═══════════════════════════════════════════════ */
+.scroll-progress {
+  position: fixed; top: 0; left: 0; height: 3px;
+  background: linear-gradient(90deg, var(--sky), var(--gold));
+  z-index: 200; transition: width 0.1s;
+}
+
+/* Back to top */
+.back-top {
+  position: fixed; bottom: 28px; right: 28px; z-index: 50;
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--sky-deep); color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; cursor: pointer; transition: var(--transition);
+  opacity: 0; pointer-events: none;
+  box-shadow: 0 4px 16px rgba(14,165,233,0.4);
+}
+.back-top.show { opacity: 1; pointer-events: auto; }
+.back-top:hover { background: var(--sky); transform: translateY(-3px); }
+</style>
+</head>
+<body>
+
+<!-- ░░ SCROLL PROGRESS ░░ -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- ░░ BACK TO TOP ░░ -->
+<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Kembali ke atas">↑</button>
+
+<!-- ═══════════════════════════════════════════════
+     NAVIGATION
+═══════════════════════════════════════════════ -->
+<nav class="nav" id="mainNav">
+  <div class="container nav-inner">
+    <a href="#" class="nav-logo">
+      <div class="nav-logo-icon">🤲</div>
+      <div class="nav-logo-text">
+        <strong>ArRahmah Care</strong>
+        <span>Zakat · Infaq · Sedekah</span>
+      </div>
+    </a>
+    <div class="nav-links">
+      <a href="#dashboard">Transparansi</a>
+      <a href="#program">Program</a>
+      <a href="#dampak">Dampak</a>
+      <a href="#tentang">Tentang Kami</a>
+      <a href="#kontak">Kontak</a>
+    </div>
+    <div class="nav-cta">
+      <a href="#program" class="btn btn-outline" style="padding:10px 20px;font-size:14px;">Lihat Program</a>
+      <a href="#donasi" class="btn btn-primary" style="padding:10px 20px;font-size:14px;">Donasi Sekarang</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile Nav -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="#dashboard" onclick="closeMobile()">Transparansi</a>
+  <a href="#program" onclick="closeMobile()">Program</a>
+  <a href="#dampak" onclick="closeMobile()">Dampak</a>
+  <a href="#tentang" onclick="closeMobile()">Tentang Kami</a>
+  <a href="#kontak" onclick="closeMobile()">Kontak</a>
+  <a href="#donasi" class="btn btn-primary">🤲 Donasi Sekarang</a>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════
+     1. HERO SECTION
+═══════════════════════════════════════════════ -->
+<section class="hero" id="hero">
+  <div class="hero-geo hero-geo-1"></div>
+  <div class="hero-geo hero-geo-2"></div>
+  <div class="hero-geo hero-geo-3"></div>
+
+  <div class="container">
+    <div class="hero-inner">
+      <!-- Left: Copy -->
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="hero-badge-dot"></span>
+          Lembaga Terpercaya di Bawah Yayasan Ar-Rahmah Sulawesi
+        </div>
+
+        <h1 class="hero-headline">
+          Ajarkan Anak Berbagi —<br>
+          <em>Sebelum Dunia Mengajarkan</em><br>
+          Mereka Untuk Memiliki.
+        </h1>
+
+        <p class="hero-sub">
+          ArRahmah Care hadir sebagai jembatan kepercayaan antara hati yang peduli dan tangan yang membutuhkan. Setiap rupiah yang Anda titipkan dikelola dengan amanah, transparan, dan terlapor secara nyata.
+        </p>
+
+        <div class="hero-cta">
+          <a href="#donasi" class="btn btn-gold" id="donasiBtn">
+            🤲 Donasi Sekarang
+          </a>
+          <a href="#dashboard" class="btn btn-outline-white">
+            📊 Lihat Laporan
+          </a>
+        </div>
+
+        <div class="hero-trust">
+          <div class="hero-trust-icon">🛡️</div>
+          <div class="hero-trust-text">
+            <strong>Terdaftar & Terawasi Yayasan Ar-Rahmah Sulawesi</strong>
+            Menaungi 4 unit sekolah Islam terpadu — PAUD, SDIT, SMPIT &amp; SMAIT di Makassar
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Visual Card -->
+      <div class="hero-visual">
+        <div class="hero-floating hero-floating-1">
+          <div class="hero-floating-icon">💚</div>
+          <div class="hero-floating-text">
+            <strong>+127 Donatur</strong>
+            <span>Bergabung bulan ini</span>
+          </div>
+        </div>
+
+        <div class="hero-card">
+          <div class="hero-card-top">
+            <span class="hero-card-label">Dashboard Real-Time</span>
+            <span class="hero-card-live"><span></span> Live</span>
+          </div>
+
+          <div class="hero-stat-grid">
+            <div class="hero-stat">
+              <div class="hero-stat-num" id="heroStatDonasi">Rp 482 Jt</div>
+              <div class="hero-stat-lbl">Total Tersalurkan</div>
+            </div>
+            <div class="hero-stat">
+              <div class="hero-stat-num">1.240+</div>
+              <div class="hero-stat-lbl">Penerima Manfaat</div>
+            </div>
+          </div>
+
+          <div class="hero-prog-wrap">
+            <div class="hero-prog-header">
+              <span class="hero-prog-name">Beasiswa Siswa Yatim</span>
+              <span class="hero-prog-pct">78%</span>
+            </div>
+            <div class="prog-bar">
+              <div class="prog-fill" style="width:78%"></div>
+            </div>
+
+            <div class="hero-prog-header">
+              <span class="hero-prog-name">Wakaf Fasilitas Masjid</span>
+              <span class="hero-prog-pct">54%</span>
+            </div>
+            <div class="prog-bar">
+              <div class="prog-fill prog-fill-gold" style="width:54%"></div>
+            </div>
+
+            <div class="hero-prog-header">
+              <span class="hero-prog-name">Bantuan Pangan Keluarga</span>
+              <span class="hero-prog-pct">91%</span>
+            </div>
+            <div class="prog-bar">
+              <div class="prog-fill" style="width:91%"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-floating hero-floating-2">
+          <div class="hero-floating-icon">✅</div>
+          <div class="hero-floating-text">
+            <strong>Laporan Terverifikasi</strong>
+            <span>Diperbarui setiap minggu</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     2. LIVE IMPACT DASHBOARD
+═══════════════════════════════════════════════ -->
+<section class="section stats" id="dashboard">
+  <div class="container text-center">
+    <div class="tag tag-sky stats-label">📊 Transparansi & Akuntabilitas</div>
+    <h2 class="stats-heading">
+      Setiap Angka Adalah<br><em>Amanah yang Kami Jaga</em>
+    </h2>
+    <p class="stats-sub">
+      Data diperbarui secara berkala dari catatan penyaluran resmi ArRahmah Care. Kami percaya transparansi bukan pilihan — melainkan kewajiban.
+    </p>
+
+    <!-- ─── GOOGLE SHEETS INTEGRATION GUIDE ────────────────────────────────
+         CARA INTEGRASI:
+         1. Buka Google Sheets → Ekstensi → Apps Script
+         2. Buat fungsi doGet() yang return JSON data indikator berikut
+         3. Deploy sebagai Web App (akses: Anyone)
+         4. Ganti SHEETS_API_URL di script JS bagian bawah halaman ini
+         5. Format JSON yang diharapkan:
+            {
+              "totalDonasi": "482.500.000",
+              "penerima": "1240",
+              "programAktif": "7",
+              "bulanBerjalan": "Mai 2026"
+            }
+         Fungsi fetchDashboard() sudah disiapkan di bawah — uncomment untuk mengaktifkan.
+    ─────────────────────────────────────────────────────────────────────── -->
+
+    <div class="stats-grid">
+      <div class="stat-card fade-in">
+        <div class="stat-icon stat-icon-sky">💰</div>
+        <div class="stat-num">
+          <span id="counterDonasi">0</span>
+        </div>
+        <div class="stat-label">Total Donasi Tersalurkan</div>
+        <div class="stat-period">Periode Jan–Mei 2026</div>
+      </div>
+
+      <div class="stat-card fade-in fade-in-delay-1">
+        <div class="stat-icon stat-icon-sky">👥</div>
+        <div class="stat-num">
+          <span id="counterPenerima">0</span><span>+</span>
+        </div>
+        <div class="stat-label">Jiwa Penerima Manfaat</div>
+        <div class="stat-period">Sejak berdiri 2019</div>
+      </div>
+
+      <div class="stat-card fade-in fade-in-delay-2">
+        <div class="stat-icon stat-icon-gold">📌</div>
+        <div class="stat-num">
+          <span id="counterProgram">0</span>
+        </div>
+        <div class="stat-label">Program Aktif Berjalan</div>
+        <div class="stat-period">Tahun 2026</div>
+      </div>
+
+      <div class="stat-card fade-in fade-in-delay-3">
+        <div class="stat-icon stat-icon-gold">🏫</div>
+        <div class="stat-num">
+          <span id="counterUnit">0</span>
+        </div>
+        <div class="stat-label">Unit Sekolah Terintegrasi</div>
+        <div class="stat-period">PAUD · SDIT · SMPIT · SMAIT</div>
+      </div>
+    </div>
+
+    <p class="stats-note">
+      Data bersumber dari sistem pencatatan internal ArRahmah Care.
+      <a href="#laporan">Unduh laporan lengkap →</a>
+    </p>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     3. PROGRAM CARDS
+═══════════════════════════════════════════════ -->
+<section class="section programs" id="program">
+  <div class="container">
+    <div class="section-header text-center">
+      <div class="tag tag-gold">🌟 Program Unggulan</div>
+      <h2 class="section-heading">
+        Pilih Cara Terbaik<br><em>untuk Berbagi</em>
+      </h2>
+      <p class="section-sub">
+        Setiap program dirancang agar dampaknya nyata, terukur, dan menyentuh langsung kehidupan penerima manfaat.
+      </p>
+    </div>
+
+    <div class="prog-grid">
+
+      <!-- Card 1: Beasiswa -->
+      <div class="prog-card fade-in">
+        <div class="prog-img prog-img-1">
+          🎓
+          <span class="prog-urgency urgent">⏰ Segera</span>
+        </div>
+        <div class="prog-body">
+          <div class="prog-cat">Pendidikan</div>
+          <h3 class="prog-title">Beasiswa Siswa Yatim &amp; Dhuafa</h3>
+          <p class="prog-desc">
+            Memastikan anak-anak yatim dan dari keluarga kurang mampu tetap bisa merasakan pendidikan Islam terpadu berkualitas. Donasi Anda menanggung SPP, seragam, dan perlengkapan belajar selama satu tahun penuh.
+          </p>
+          <div class="prog-progress">
+            <div class="prog-progress-header">
+              <span class="prog-progress-goal">Target: Rp 150.000.000</span>
+              <span class="prog-progress-pct">78%</span>
+            </div>
+            <div class="prog-progress-bar">
+              <div class="prog-fill" style="width:78%"></div>
+            </div>
+          </div>
+          <div class="prog-amounts">
+            <div class="prog-raised">Rp 117 Jt <span>terkumpul</span></div>
+            <div class="prog-target">Target Rp 150 Jt</div>
+          </div>
+          <a href="#donasi" class="btn btn-primary prog-donate-btn">Donasi Sekarang →</a>
+        </div>
+      </div>
+
+      <!-- Card 2: Bantuan Bencana -->
+      <div class="prog-card fade-in fade-in-delay-1">
+        <div class="prog-img prog-img-2">
+          ❤️‍🔥
+          <span class="prog-urgency open">✅ Terbuka</span>
+        </div>
+        <div class="prog-body">
+          <div class="prog-cat">Kemanusiaan</div>
+          <h3 class="prog-title">Bantuan Bencana &amp; Pangan Darurat</h3>
+          <p class="prog-desc">
+            Merespons cepat setiap kejadian bencana alam di Sulawesi dengan paket sembako, obat-obatan, dan kebutuhan dasar. Siswa kami juga turut serta dalam aksi solidaritas sebagai pelajaran nyata tentang empati.
+          </p>
+          <div class="prog-progress">
+            <div class="prog-progress-header">
+              <span class="prog-progress-goal">Target: Rp 80.000.000</span>
+              <span class="prog-progress-pct">91%</span>
+            </div>
+            <div class="prog-progress-bar">
+              <div class="prog-fill prog-fill-gold" style="width:91%"></div>
+            </div>
+          </div>
+          <div class="prog-amounts">
+            <div class="prog-raised">Rp 72,8 Jt <span>terkumpul</span></div>
+            <div class="prog-target">Target Rp 80 Jt</div>
+          </div>
+          <a href="#donasi" class="btn btn-gold prog-donate-btn">Donasi Sekarang →</a>
+        </div>
+      </div>
+
+      <!-- Card 3: Wakaf -->
+      <div class="prog-card fade-in fade-in-delay-2">
+        <div class="prog-img prog-img-3">
+          🕌
+          <span class="prog-urgency open">✅ Terbuka</span>
+        </div>
+        <div class="prog-body">
+          <div class="prog-cat">Wakaf Produktif</div>
+          <h3 class="prog-title">Wakaf Fasilitas &amp; Masjid Sekolah</h3>
+          <p class="prog-desc">
+            Investasi akhirat yang pahalanya terus mengalir. Wakaf Anda akan mewujudkan musholla sekolah yang nyaman, perpustakaan Islam, dan fasilitas wudhu yang layak untuk ribuan siswa kami.
+          </p>
+          <div class="prog-progress">
+            <div class="prog-progress-header">
+              <span class="prog-progress-goal">Target: Rp 250.000.000</span>
+              <span class="prog-progress-pct">54%</span>
+            </div>
+            <div class="prog-progress-bar">
+              <div class="prog-fill prog-fill-gold" style="width:54%"></div>
+            </div>
+          </div>
+          <div class="prog-amounts">
+            <div class="prog-raised">Rp 135 Jt <span>terkumpul</span></div>
+            <div class="prog-target">Target Rp 250 Jt</div>
+          </div>
+          <a href="#donasi" class="btn btn-primary prog-donate-btn">Wakaf Sekarang →</a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Row 2: Program Kurban & Sedekah Daging -->
+    <div class="prog-grid-row2">
+
+      <!-- Card 4: Kurban -->
+      <div class="prog-card fade-in fade-in-delay-1">
+        <div class="prog-img prog-img-4">
+          🐄
+          <span class="prog-urgency seasonal">🌙 Musiman</span>
+        </div>
+        <div class="prog-body">
+          <div class="prog-cat">Ibadah Kurban</div>
+          <h3 class="prog-title">Titip Kurban Idul Adha</h3>
+          <p class="prog-desc">
+            Titipkan ibadah kurban Anda kepada kami — mulai dari pemilihan hewan, penyembelihan sesuai syariat, hingga pendistribusian daging kepada keluarga dhuafa di sekitar sekolah dan masyarakat terdekat. Siswa kami juga terlibat langsung dalam proses distribusi sebagai bagian dari pendidikan karakter.
+          </p>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px;">
+            <span style="background:var(--sky-light);color:var(--sky-deep);padding:5px 12px;border-radius:999px;font-size:12px;font-weight:600;">🐄 Sapi Rp 3.500.000/slot</span>
+            <span style="background:var(--gold-lt);color:var(--gold);padding:5px 12px;border-radius:999px;font-size:12px;font-weight:600;">🐑 Kambing Rp 1.800.000</span>
+          </div>
+          <div class="prog-progress">
+            <div class="prog-progress-header">
+              <span class="prog-progress-goal">Target: 20 ekor sapi · 50 ekor kambing</span>
+              <span class="prog-progress-pct">38%</span>
+            </div>
+            <div class="prog-progress-bar">
+              <div class="prog-fill" style="width:38%"></div>
+            </div>
+          </div>
+          <div class="prog-amounts">
+            <div class="prog-raised">27 hewan <span>sudah dititip</span></div>
+            <div class="prog-target">Target 70 hewan</div>
+          </div>
+          <a href="#donasi" class="btn btn-primary prog-donate-btn">Titip Kurban →</a>
+        </div>
+      </div>
+
+      <!-- Card 5: Sedekah Daging -->
+      <div class="prog-card fade-in fade-in-delay-2">
+        <div class="prog-img prog-img-5">
+          🍖
+          <span class="prog-urgency open">✅ Terbuka</span>
+        </div>
+        <div class="prog-body">
+          <div class="prog-cat">Sedekah Pangan</div>
+          <h3 class="prog-title">Sedekah Daging Sepanjang Tahun</h3>
+          <p class="prog-desc">
+            Tidak harus menunggu Idul Adha untuk berbagi daging. Program Sedekah Daging hadir sepanjang tahun — menyalurkan protein hewani kepada keluarga prasejahtera di sekitar lingkungan 4 unit sekolah Ar-Rahmah. Donasi mulai Rp 150.000 sudah bisa memberikan satu paket daging segar untuk satu keluarga.
+          </p>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px;">
+            <span style="background:var(--sky-light);color:var(--sky-deep);padding:5px 12px;border-radius:999px;font-size:12px;font-weight:600;">🥩 1 Paket = Rp 150.000</span>
+            <span style="background:var(--gold-lt);color:var(--gold);padding:5px 12px;border-radius:999px;font-size:12px;font-weight:600;">📦 Min. 5 Paket</span>
+          </div>
+          <div class="prog-progress">
+            <div class="prog-progress-header">
+              <span class="prog-progress-goal">Target: 500 paket / bulan</span>
+              <span class="prog-progress-pct">63%</span>
+            </div>
+            <div class="prog-progress-bar">
+              <div class="prog-fill prog-fill-gold" style="width:63%"></div>
+            </div>
+          </div>
+          <div class="prog-amounts">
+            <div class="prog-raised">315 paket <span>bulan ini</span></div>
+            <div class="prog-target">Target 500 paket</div>
+          </div>
+          <a href="#donasi" class="btn btn-gold prog-donate-btn">Sedekah Daging →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     4. CERITA DAMPAK
+═══════════════════════════════════════════════ -->
+<section class="section impact" id="dampak">
+  <div class="container">
+    <div class="section-header text-center" style="margin-bottom:64px;">
+      <div class="tag tag-sky">💬 Cerita Dampak</div>
+      <h2 class="section-heading">
+        Donasi Anda Bukan Sekedar Angka —<br><em>Ini Tentang Kehidupan yang Berubah</em>
+      </h2>
+      <p class="section-sub">
+        Setiap penyaluran adalah momen yang kami dokumentasikan dengan jujur — agar Anda tahu ke mana amanah Anda pergi.
+      </p>
+    </div>
+
+    <div class="impact-grid">
+      <!-- Left: Testimonials -->
+      <div class="impact-left">
+        <div class="impact-quote fade-in">
+          <p>
+            "Anak saya hampir berhenti sekolah karena kami tidak mampu. Tapi lewat beasiswa ArRahmah Care, ia kini menjadi ketua OSIS dan hafal 5 juz Al-Quran. Terima kasih kepada para donatur yang bahkan tidak kami kenal namanya."
+          </p>
+          <div class="impact-quote-author">
+            <div class="impact-quote-avatar">🧕</div>
+            <div>
+              <div class="impact-quote-name">Ibu Rahmawati</div>
+              <div class="impact-quote-role">Orang tua penerima beasiswa, SDIT Ar-Rahmah</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-bottom:16px;">
+          <div class="impact-story fade-in fade-in-delay-1">
+            <div class="impact-story-icon">📚</div>
+            <div>
+              <div class="impact-story-title">Siswa Sebagai Agen Kebaikan</div>
+              <div class="impact-story-text">Setiap Jumat, siswa SMPIT kami mengumpulkan infaq jariyah dari kelas masing-masing. Ini bukan sekadar ritual — ini adalah kurikulum karakter yang kami percaya paling kuat.</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-bottom:16px;">
+          <div class="impact-story fade-in fade-in-delay-2">
+            <div class="impact-story-icon">🏠</div>
+            <div>
+              <div class="impact-story-title">61 Keluarga Terbantu Pasca Banjir</div>
+              <div class="impact-story-text">Tim ArRahmah Care dan relawan siswa SMAIT menyalurkan 61 paket bantuan darurat dalam 72 jam pasca banjir di Takalar, Sulawesi Selatan — Januari 2026.</div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="impact-story fade-in fade-in-delay-3">
+            <div class="impact-story-icon">🕌</div>
+            <div>
+              <div class="impact-story-title">Musholla Nyaman, Ibadah Khusyu'</div>
+              <div class="impact-story-text">Hasil wakaf fasilitas telah merampungkan renovasi musholla SDIT yang kini menampung 200+ siswa untuk shalat Dzuhur berjamaah setiap hari.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Media Grid -->
+      <div class="impact-right fade-in fade-in-delay-1">
+        <div class="impact-media-grid" style="margin-bottom:20px;">
+          <div class="impact-media impact-media-main">
+            🎬
+            <div class="impact-media-play">
+              <div class="play-btn">▶</div>
+            </div>
+          </div>
+          <div class="impact-media impact-media-1">📸</div>
+          <div class="impact-media impact-media-2">📸</div>
+          <div class="impact-media impact-media-3">📸</div>
+          <div class="impact-media impact-media-4">📸</div>
+        </div>
+
+        <p style="font-size:12.5px;color:var(--muted);text-align:center;margin-bottom:20px;">
+          📌 Dokumentasi penyaluran resmi ArRahmah Care · Update berkala
+        </p>
+
+        <div class="impact-counter-strip">
+          <div class="impact-counter-item">
+            <div class="impact-counter-num">61</div>
+            <div class="impact-counter-lbl">Keluarga Dibantu</div>
+          </div>
+          <div class="impact-counter-item">
+            <div class="impact-counter-num">47</div>
+            <div class="impact-counter-lbl">Siswa Beasiswa</div>
+          </div>
+          <div class="impact-counter-item">
+            <div class="impact-counter-num">100%</div>
+            <div class="impact-counter-lbl">Terlapor</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     5. TRUST SECTION
+═══════════════════════════════════════════════ -->
+<section class="section trust" id="tentang">
+  <div class="container trust-inner">
+    <div class="trust-grid">
+      <!-- Left -->
+      <div class="trust-left fade-in">
+        <span class="trust-tag">🛡️ Tentang Kami & Legalitas</span>
+        <h2 class="trust-heading">
+          Kepercayaan Adalah<br><em>Fondasi Kami</em>
+        </h2>
+        <p class="trust-para">
+          ArRahmah Care adalah unit lembaga amil zakat, infaq, dan sedekah yang bernaung resmi di bawah <strong style="color:white;">Yayasan Ar-Rahmah Sulawesi</strong> — sebuah yayasan pendidikan Islam terpadu yang telah mendidik ribuan generasi di Makassar sejak lebih dari satu dekade.
+        </p>
+        <p class="trust-para" style="margin-top:-12px;">
+          Dengan basis komunitas sekolah yang kuat (PAUD, SDIT, SMPIT, dan SMAIT), kami memiliki ekosistem kepercayaan yang terbangun secara organik melalui hubungan langsung antara yayasan, orang tua, dan penerima manfaat.
+        </p>
+
+        <div class="trust-items">
+          <div class="trust-item">
+            <div class="trust-item-icon">📋</div>
+            <div class="trust-item-text">
+              <strong>Berbadan Hukum Resmi</strong>
+              <span>Terdaftar di bawah Yayasan Ar-Rahmah Sulawesi dengan legalitas penuh</span>
+            </div>
+          </div>
+          <div class="trust-item">
+            <div class="trust-item-icon">📊</div>
+            <div class="trust-item-text">
+              <strong>Laporan Transparan Berkala</strong>
+              <span>Laporan penyaluran diterbitkan setiap bulan dan dapat diakses publik</span>
+            </div>
+          </div>
+          <div class="trust-item">
+            <div class="trust-item-icon">🏫</div>
+            <div class="trust-item-text">
+              <strong>Terintegrasi dengan 4 Unit Sekolah</strong>
+              <span>Donatur dapat memverifikasi dampak langsung ke wali murid dan siswa</span>
+            </div>
+          </div>
+          <div class="trust-item">
+            <div class="trust-item-icon">🤝</div>
+            <div class="trust-item-text">
+              <strong>Diawasi Dewan Pengawas Syariah</strong>
+              <span>Setiap program divalidasi kesesuaian syariahnya oleh ustadz pembimbing</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right -->
+      <div class="trust-right fade-in fade-in-delay-1" id="donasi">
+        <div class="trust-cards">
+          <div class="trust-card">
+            <div class="trust-card-icon">🏦</div>
+            <div class="trust-card-title">Transfer Bank</div>
+            <div class="trust-card-text">
+              <strong style="color:rgba(255,255,255,0.80);">BSI · 7192-8831-22</strong><br>
+              a/n ArRahmah Care · Yayasan Ar-Rahmah Sulawesi
+            </div>
+          </div>
+
+          <div class="trust-card">
+            <div class="trust-card-icon">📱</div>
+            <div class="trust-card-title">QRIS Scan &amp; Pay</div>
+            <div class="trust-card-text">
+              Scan QRIS di bawah atau buka aplikasi dompet digital favorit Anda untuk donasi instan.
+            </div>
+          </div>
+
+          <!-- QRIS placeholder -->
+          <div class="trust-card" style="grid-column:span 2;display:flex;align-items:center;gap:20px;">
+            <div style="width:80px;height:80px;background:rgba(255,255,255,0.1);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:36px;flex-shrink:0;">📲</div>
+            <div>
+              <div style="font-size:13px;font-weight:700;color:white;margin-bottom:4px;">Scan QRIS ArRahmah Care</div>
+              <div style="font-size:12px;color:rgba(255,255,255,0.45);margin-bottom:12px;">Berlaku untuk semua aplikasi dompet digital & m-banking</div>
+              <div class="trust-payment-logos">
+                <span class="payment-badge">GoPay</span>
+                <span class="payment-badge">OVO</span>
+                <span class="payment-badge">Dana</span>
+                <span class="payment-badge">ShopeePay</span>
+                <span class="payment-badge">LinkAja</span>
+                <span class="payment-badge">BSI Mobile</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="trust-card">
+            <div class="trust-card-icon">📞</div>
+            <div class="trust-card-title">Konfirmasi Donasi</div>
+            <div class="trust-card-text">WhatsApp: <strong style="color:rgba(255,255,255,0.80);">0812-XXXX-XXXX</strong><br>Senin–Jumat, 08.00–16.00 WITA</div>
+          </div>
+
+          <div class="trust-card">
+            <div class="trust-card-icon">🧾</div>
+            <div class="trust-card-title">Bukti Penyaluran</div>
+            <div class="trust-card-text">Setiap donatur menerima laporan penyaluran digital dalam 14 hari kerja.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Partner logos -->
+    <div class="trust-partners-strip fade-in">
+      <div class="trust-partners-label">Mitra &amp; Pendukung Kelembagaan</div>
+      <div class="trust-partners-logos">
+        <div class="partner-logo">Yayasan Ar-Rahmah Sulawesi</div>
+        <div class="partner-logo">SDIT Ar-Rahmah</div>
+        <div class="partner-logo">SMPIT Ar-Rahmah</div>
+        <div class="partner-logo">SMAIT Ar-Rahmah</div>
+        <div class="partner-logo">PAUD Ar-Rahmah</div>
+        <div class="partner-logo">BSI Makassar</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     CTA BANNER
+═══════════════════════════════════════════════ -->
+<section class="cta-banner">
+  <div class="container cta-banner-inner">
+    <h2>Mulai Berbagi Hari Ini —<br><em>Sebelum Hari Esok Tidak Pasti</em></h2>
+    <p>Bergabunglah bersama 1.200+ donatur yang telah mempercayakan kebaikan mereka kepada ArRahmah Care.</p>
+    <div class="cta-banner-btns">
+      <a href="#donasi" class="btn btn-gold">🤲 Donasi Sekarang</a>
+      <a href="#program" class="btn btn-outline-white">Lihat Semua Program</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     6. FOOTER
+═══════════════════════════════════════════════ -->
+<footer class="footer" id="kontak">
+  <div class="container">
+    <div class="footer-grid">
+      <!-- Brand -->
+      <div>
+        <div class="footer-brand-logo">
+          <div class="footer-brand-icon">🤲</div>
+          <div class="footer-brand-text">
+            <strong>ArRahmah Care</strong>
+            <span>Zakat · Infaq · Sedekah · Wakaf</span>
+          </div>
+        </div>
+        <p class="footer-desc">
+          Lembaga amal yang lahir dari ekosistem pendidikan Islam terpadu Ar-Rahmah Sulawesi. Hadir untuk memastikan kepedulian mengalir dari orang tua, siswa, dan masyarakat ke tangan yang paling membutuhkan.
+        </p>
+        <div class="footer-social">
+          <a href="#" class="social-btn" title="Instagram">📸</a>
+          <a href="#" class="social-btn" title="YouTube">▶️</a>
+          <a href="#" class="social-btn" title="WhatsApp">💬</a>
+          <a href="#" class="social-btn" title="Facebook">👤</a>
+          <a href="#" class="social-btn" title="TikTok">🎵</a>
+        </div>
+      </div>
+
+      <!-- Links Program -->
+      <div>
+        <div class="footer-heading">Program</div>
+        <ul class="footer-links">
+          <li><a href="#program">Beasiswa Siswa Yatim</a></li>
+          <li><a href="#program">Bantuan Bencana</a></li>
+          <li><a href="#program">Wakaf Fasilitas</a></li>
+          <li><a href="#program">Titip Kurban Idul Adha</a></li>
+          <li><a href="#program">Sedekah Daging</a></li>
+          <li><a href="#program">Infaq Pendidikan</a></li>
+          <li><a href="#program">Sedekah Jariyah</a></li>
+        </ul>
+      </div>
+
+      <!-- Links Lembaga -->
+      <div>
+        <div class="footer-heading">Lembaga</div>
+        <ul class="footer-links">
+          <li><a href="#tentang">Tentang ArRahmah Care</a></li>
+          <li><a href="#dashboard">Laporan Keuangan</a></li>
+          <li><a href="#">Syarat & Ketentuan</a></li>
+          <li><a href="#">Kebijakan Privasi</a></li>
+          <li><a href="#">Hubungi Kami</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact -->
+      <div>
+        <div class="footer-heading">Kontak</div>
+        <div class="footer-contact-item">
+          <span class="footer-contact-icon">📍</span>
+          <span>Jl. [Nama Jalan], Kompleks Yayasan Ar-Rahmah, Makassar, Sulawesi Selatan 90XXX</span>
+        </div>
+        <div class="footer-contact-item">
+          <span class="footer-contact-icon">📞</span>
+          <span>(0411) XXX-XXXX<br>0812-XXXX-XXXX (WhatsApp)</span>
+        </div>
+        <div class="footer-contact-item">
+          <span class="footer-contact-icon">✉️</span>
+          <span>care@arrahmahmakassar.sch.id</span>
+        </div>
+        <div class="footer-contact-item">
+          <span class="footer-contact-icon">🕐</span>
+          <span>Senin–Jumat: 08.00–16.00 WITA<br>Sabtu: 08.00–12.00 WITA</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom -->
+    <div class="footer-bottom">
+      <span>© 2026 ArRahmah Care · Unit Amal Yayasan Ar-Rahmah Sulawesi · Makassar</span>
+      <div class="footer-legal">
+        <a href="#">Kebijakan Privasi</a>
+        <a href="#">Syarat & Ketentuan</a>
+        <a href="#">Laporan Publik</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ═══════════════════════════════════════════════
+     JAVASCRIPT
+═══════════════════════════════════════════════ -->
+<script>
+/* ── NAV ── */
+const nav = document.getElementById('mainNav');
+const hamburger = document.getElementById('hamburger');
+const mobileNav = document.getElementById('mobileNav');
+
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+  document.getElementById('backTop').classList.toggle('show', window.scrollY > 400);
+  // Scroll progress
+  const h = document.documentElement;
+  const pct = (window.scrollY / (h.scrollHeight - h.clientHeight)) * 100;
+  document.getElementById('scrollProgress').style.width = pct + '%';
+});
+
+hamburger.addEventListener('click', () => mobileNav.classList.toggle('open'));
+function closeMobile() { mobileNav.classList.remove('open'); }
+
+/* ── COUNTER ANIMATION ── */
+const counters = [
+  { id: 'counterDonasi',   target: 'Rp 482 Jt', numeric: false },
+  { id: 'counterPenerima', target: 1240,         numeric: true  },
+  { id: 'counterProgram',  target: 9,            numeric: true  },
+  { id: 'counterUnit',     target: 4,            numeric: true  },
+];
+
+function animateCounter(el, target, duration = 1800) {
+  if (!Number.isInteger(target)) { el.textContent = target; return; }
+  let start = 0; const step = target / (duration / 16);
+  const timer = setInterval(() => {
+    start += step;
+    if (start >= target) { start = target; clearInterval(timer); }
+    el.textContent = Math.floor(start).toLocaleString('id-ID');
+  }, 16);
+}
+
+/* ── INTERSECTION OBSERVER (fade-in + counter trigger) ── */
+const observed = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observed.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.fade-in').forEach(el => observed.observe(el));
+
+// Trigger counters when stats section visible
+const statsSection = document.getElementById('dashboard');
+let countersDone = false;
+const counterObserver = new IntersectionObserver((entries) => {
+  if (entries[0].isIntersecting && !countersDone) {
+    countersDone = true;
+    counters.forEach(c => {
+      const el = document.getElementById(c.id);
+      if (el) animateCounter(el, c.target);
+    });
+  }
+}, { threshold: 0.3 });
+if (statsSection) counterObserver.observe(statsSection);
+
+
+/* ═══════════════════════════════════════════════════
+   GOOGLE SHEETS INTEGRATION (Siap Pakai)
+   ───────────────────────────────────────────────────
+   LANGKAH AKTIVASI:
+   1. Ganti SHEETS_API_URL di bawah dengan URL Web App Apps Script Anda
+   2. Hapus komentar pada blok fetchDashboard()
+   3. Panggil fetchDashboard() di bawah ini
+   ═══════════════════════════════════════════════════ */
+const SHEETS_API_URL = 'YOUR_APPS_SCRIPT_WEB_APP_URL_HERE';
+
+/*
+async function fetchDashboard() {
+  try {
+    const res = await fetch(SHEETS_API_URL);
+    const data = await res.json();
+
+    // Update counter elements
+    document.getElementById('counterDonasi').textContent   = data.totalDonasi  || 'Rp 482 Jt';
+    document.getElementById('counterPenerima').textContent = data.penerima      || '1.240';
+    document.getElementById('counterProgram').textContent  = data.programAktif  || '7';
+    document.getElementById('counterUnit').textContent     = data.unitSekolah   || '4';
+
+    // Update Hero card stats
+    document.getElementById('heroStatDonasi').textContent  = 'Rp ' + data.totalDonasi;
+
+    // Update progress bars (jika data menyertakan persentase per program)
+    if (data.programs) {
+      data.programs.forEach((prog, i) => {
+        const bars = document.querySelectorAll('.prog-fill');
+        if (bars[i]) bars[i].style.width = prog.pct + '%';
+      });
+    }
+  } catch(err) {
+    console.warn('Dashboard: Menggunakan data statis (API tidak tersambung)', err);
+  }
+}
+// fetchDashboard(); // ← Uncomment untuk aktifkan integrasi live
+*/
+
+/* ── SMOOTH SCROLL for anchor links ── */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      closeMobile();
+    }
+  });
+});
+</script>
+</body>
+</html>
