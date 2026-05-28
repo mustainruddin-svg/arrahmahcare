@@ -1520,7 +1520,80 @@ async function fetchDashboard() {
     console.warn('Dashboard: Menggunakan data statis (API tidak tersambung)', err);
   }
 }
-fetchDashboard(); //← Uncomment untuk aktifkan integrasi live
+async function fetchDashboard() {
+  try {
+    const res  = await fetch(SHEETS_API_URL);
+    const data = await res.json();
+    const d    = data.dashboard;
+    const p    = data.programs;
+
+    // ── Counter Dashboard ──
+    document.getElementById('counterDonasi').textContent   = d.totalDonasi;
+    document.getElementById('counterPenerima').textContent = Number(d.penerima).toLocaleString('id-ID');
+    document.getElementById('counterProgram').textContent  = d.programAktif;
+    document.getElementById('counterUnit').textContent     = d.unitSekolah;
+
+    // ── Hero card ──
+    document.getElementById('heroStatDonasi').textContent  = d.totalDonasi;
+
+    // ── Progress Bar per Program ──
+    // Urutan id harus sama dengan urutan baris di tab Program
+    const progMap = {
+      beasiswa : { bar: 0, pctEl: 0 },
+      bencana  : { bar: 1, pctEl: 1 },
+      wakaf    : { bar: 2, pctEl: 2 },
+      kurban   : { bar: 3, pctEl: 3 },
+      daging   : { bar: 4, pctEl: 4 },
+    };
+
+    const bars    = document.querySelectorAll('.prog-progress-bar .prog-fill');
+    const pcts    = document.querySelectorAll('.prog-progress-pct');
+    const raised  = document.querySelectorAll('.prog-raised');
+    const targets = document.querySelectorAll('.prog-target');
+
+    p.forEach((prog, i) => {
+      if (bars[i])    bars[i].style.width       = prog.pct + '%';
+      if (pcts[i])    pcts[i].textContent        = prog.pct + '%';
+
+      // Format angka sesuai satuan
+      let terkumpulStr, targetStr;
+      if (prog.satuan === 'rupiah') {
+        terkumpulStr = 'Rp ' + formatRupiah(prog.terkumpul);
+        targetStr    = 'Target Rp ' + formatRupiah(prog.target);
+      } else {
+        terkumpulStr = prog.terkumpul + ' ' + prog.satuan;
+        targetStr    = 'Target ' + prog.target + ' ' + prog.satuan;
+      }
+
+      if (raised[i]) {
+        raised[i].innerHTML = terkumpulStr + ' <span>terkumpul</span>';
+      }
+      if (targets[i]) targets[i].textContent = targetStr;
+    });
+
+    // ── Hero progress bars (3 teratas) ──
+    const heroBars = document.querySelectorAll('.hero-prog-wrap .prog-fill');
+    const heroPcts = document.querySelectorAll('.hero-prog-wrap .hero-prog-pct');
+    [0,1,2].forEach(i => {
+      if (p[i] && heroBars[i]) heroBars[i].style.width    = p[i].pct + '%';
+      if (p[i] && heroPcts[i]) heroPcts[i].textContent    = p[i].pct + '%';
+    });
+
+  } catch(err) {
+    console.warn('GSheets tidak tersambung, pakai data statis.', err);
+  }
+}
+
+// Helper: format angka ke "117 Jt" / "2,5 M"
+function formatRupiah(num) {
+  num = Number(num);
+  if (num >= 1000000000) return (num / 1000000000).toFixed(1).replace('.0','') + ' M';
+  if (num >= 1000000)    return (num / 1000000).toFixed(1).replace('.0','') + ' Jt';
+  if (num >= 1000)       return (num / 1000).toFixed(0) + ' Rb';
+  return num.toString();
+}
+
+fetchDashboard(); // aktifkan
 */
 
 /* ── SMOOTH SCROLL for anchor links ── */
