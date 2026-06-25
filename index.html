@@ -1485,43 +1485,85 @@ if (statsSection) counterObserver.observe(statsSection);
 
 
 /* ═══════════════════════════════════════════════════
-   GOOGLE SHEETS INTEGRATION (Siap Pakai)
-   ───────────────────────────────────────────────────
-   LANGKAH AKTIVASI:
-   1. Ganti SHEETS_API_URL di bawah dengan URL Web App Apps Script Anda
-   2. Hapus komentar pada blok fetchDashboard()
-   3. Panggil fetchDashboard() di bawah ini
-   ═══════════════════════════════════════════════════ */
-const SHEETS_API_URL = 'YOUR_APPS_SCRIPT_WEB_APP_URL_HERE';
+   GOOGLE SHEETS INTEGRATION — AKTIF
+═══════════════════════════════════════════════════ */
+const SHEETS_API_URL = 'https://script.google.com/macros/s/AKfycbytrJEEfODQwlOgM9uVa2rRR38CgHUfnXYli0lTyMP-CdNa5nCDM5BV59DZJjqBE88/exec';
 
-/*
+function formatRupiah(num) {
+  num = Number(num);
+  if (num >= 1000000000) return (num / 1000000000).toFixed(1).replace('.0','') + ' M';
+  if (num >= 1000000)    return (num / 1000000).toFixed(1).replace('.0','') + ' Jt';
+  if (num >= 1000)       return (num / 1000).toFixed(0) + ' Rb';
+  return num.toString();
+}
+
 async function fetchDashboard() {
   try {
-    const res = await fetch(SHEETS_API_URL);
+    const res  = await fetch(SHEETS_API_URL);
     const data = await res.json();
+    const d    = data.dashboard;
+    const p    = data.programs;
 
-    // Update counter elements
-    document.getElementById('counterDonasi').textContent   = data.totalDonasi  || 'Rp 482 Jt';
-    document.getElementById('counterPenerima').textContent = data.penerima      || '1.240';
-    document.getElementById('counterProgram').textContent  = data.programAktif  || '7';
-    document.getElementById('counterUnit').textContent     = data.unitSekolah   || '4';
+    console.log('✅ GSheets terhubung:', data);
 
-    // Update Hero card stats
-    document.getElementById('heroStatDonasi').textContent  = 'Rp ' + data.totalDonasi;
+    // ── Counter Dashboard ──
+    const elDonasi   = document.getElementById('counterDonasi');
+    const elPenerima = document.getElementById('counterPenerima');
+    const elProgram  = document.getElementById('counterProgram');
+    const elUnit     = document.getElementById('counterUnit');
 
-    // Update progress bars (jika data menyertakan persentase per program)
-    if (data.programs) {
-      data.programs.forEach((prog, i) => {
-        const bars = document.querySelectorAll('.prog-fill');
-        if (bars[i]) bars[i].style.width = prog.pct + '%';
-      });
-    }
-  } catch(err) {
-    console.warn('Dashboard: Menggunakan data statis (API tidak tersambung)', err);
+    if (elDonasi)   elDonasi.textContent   = d.totalDonasi;
+    if (elPenerima) elPenerima.textContent = Number(d.penerima).toLocaleString('id-ID');
+    if (elProgram)  elProgram.textContent  = d.programAktif;
+    if (elUnit)     elUnit.textContent     = d.unitSekolah;
+
+    // ── Hero card stat ──
+    const elHero = document.getElementById('heroStatDonasi');
+    if (elHero) elHero.textContent = d.totalDonasi;
+
+    // ── Progress bars & angka per program ──
+    const bars    = document.querySelectorAll('.prog-progress-bar .prog-fill');
+    const pcts    = document.querySelectorAll('.prog-progress-pct');
+    const raiseds = document.querySelectorAll('.prog-raised');
+    const targets = document.querySelectorAll('.prog-target');
+    const goals   = document.querySelectorAll('.prog-progress-goal');
+
+    p.forEach((prog, i) => {
+      const pct = Math.min(prog.pct, 100);
+
+      if (bars[i])    bars[i].style.width  = pct + '%';
+      if (pcts[i])    pcts[i].textContent  = pct + '%';
+
+      let terkumpulStr, targetStr, goalStr;
+      if (prog.satuan === 'rupiah') {
+        terkumpulStr = 'Rp ' + formatRupiah(prog.terkumpul);
+        targetStr    = 'Target Rp ' + formatRupiah(prog.target);
+        goalStr      = 'Target: Rp ' + formatRupiah(prog.target);
+      } else {
+        terkumpulStr = Number(prog.terkumpul).toLocaleString('id-ID') + ' ' + prog.satuan;
+        targetStr    = 'Target ' + Number(prog.target).toLocaleString('id-ID') + ' ' + prog.satuan;
+        goalStr      = targetStr;
+      }
+
+      if (raiseds[i]) raiseds[i].innerHTML = terkumpulStr + ' <span>terkumpul</span>';
+      if (targets[i]) targets[i].textContent = targetStr;
+      if (goals[i])   goals[i].textContent   = goalStr;
+    });
+
+    // ── Hero mini progress bars (3 program teratas) ──
+    const heroBars = document.querySelectorAll('.hero-prog-wrap .prog-fill');
+    const heroPcts = document.querySelectorAll('.hero-prog-wrap .hero-prog-pct');
+    [0, 1, 2].forEach(i => {
+      if (p[i] && heroBars[i]) heroBars[i].style.width = Math.min(p[i].pct, 100) + '%';
+      if (p[i] && heroPcts[i]) heroPcts[i].textContent = Math.min(p[i].pct, 100) + '%';
+    });
+
+  } catch (err) {
+    console.warn('⚠️ GSheets tidak tersambung, tampil data statis.', err);
   }
 }
-// fetchDashboard(); // ← Uncomment untuk aktifkan integrasi live
-*/
+
+fetchDashboard();
 
 /* ── SMOOTH SCROLL for anchor links ── */
 document.querySelectorAll('a[href^="#"]').forEach(a => {
