@@ -1,7 +1,5 @@
-import { PrismaClient } from "@prisma/client";
+import { db as prisma } from "../src/lib/db";
 import crypto from "node:crypto";
-
-const prisma = new PrismaClient();
 
 function hashPassword(password: string): string {
   const salt = crypto.randomBytes(16).toString("hex");
