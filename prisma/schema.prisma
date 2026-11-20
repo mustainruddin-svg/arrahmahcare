@@ -1,0 +1,253 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  displayName  String
+  role         String   @default("VIEWER") // SUPER_ADMIN, ADMIN_PROGRAM, FINANCE, APPROVER, EDITOR, VIEWER
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  auditLogs    AuditLog[]
+}
+
+model Category {
+  id          String    @id @default(cuid())
+  slug        String    @unique
+  name        String
+  description String?
+  active      Boolean   @default(true)
+  sortOrder   Int       @default(0)
+  programs    Program[]
+  createdAt   DateTime  @default(now())
+}
+
+model Program {
+  id                     String          @id @default(cuid())
+  slug                   String          @unique
+  title                  String
+  summary                String
+  body                   String
+  categoryId             String
+  category               Category        @relation(fields: [categoryId], references: [id])
+  status                 String          @default("DRAFT") // DRAFT, PENDING_REVIEW, PUBLISHED, PAUSED, COMPLETED, ARCHIVED
+  targetAmount           Int             @default(0)
+  startsAt               DateTime?
+  endsAt                 DateTime?
+  coverImage             String?
+  galleryJson            String?         @default("[]")
+  isFeatured             Boolean         @default(false)
+  beneficiaryDescription String?
+  usageOfFunds           String?
+  locationLabel          String?
+  createdAt              DateTime        @default(now())
+  updatedAt              DateTime        @updatedAt
+  donations              Donation[]
+  disbursements          Disbursement[]
+  updates                ProgramUpdate[]
+
+  @@index([status, isFeatured])
+  @@index([categoryId])
+}
+
+model ProgramUpdate {
+  id          String   @id @default(cuid())
+  programId   String
+  program     Program  @relation(fields: [programId], references: [id], onDelete: Cascade)
+  title       String
+  body        String
+  publishedAt DateTime @default(now())
+  mediaUrl    String?
+  createdAt   DateTime @default(now())
+}
+
+model Donor {
+  id              String     @id @default(cuid())
+  name            String?
+  email           String?    @unique
+  phone           String?
+  anonymousPublic Boolean    @default(false)
+  donations       Donation[]
+  createdAt       DateTime   @default(now())
+}
+
+model Donation {
+  id                   String           @id @default(cuid())
+  orderId              String           @unique
+  programId            String
+  program              Program          @relation(fields: [programId], references: [id])
+  donorId              String?
+  donor                Donor?           @relation(fields: [donorId], references: [id])
+  amount               Int
+  currency             String           @default("IDR")
+  status               String           @default("PENDING") // PENDING, PAID, FAILED, EXPIRED, CANCELLED, REFUNDED, REVIEW_REQUIRED
+  paymentMethod        String           @default("mock_qris") // mock_qris, mock_va, midtrans_snap, manual_bank_transfer
+  paymentChannel       String?
+  paidAt               DateTime?
+  expiresAt            DateTime?
+  snapToken            String?
+  snapRedirectUrl      String?
+  donorName            String?
+  donorEmail           String?
+  donorPhone           String?
+  isAnonymous          Boolean          @default(false)
+  message              String?
+  manualTransferSlipUrl String?
+  verifiedBy           String?
+  verifiedAt           DateTime?
+  notes                String?
+  createdAt            DateTime         @default(now())
+  updatedAt            DateTime         @updatedAt
+  paymentAttempts      PaymentAttempt[]
+  paymentEvents        PaymentEvent[]
+
+  @@index([programId, status, paidAt])
+  @@index([status])
+}
+
+model PaymentAttempt {
+  id                String    @id @default(cuid())
+  donationId        String
+  donation          Donation  @relation(fields: [donationId], references: [id], onDelete: Cascade)
+  provider          String    @default("mock") // mock, midtrans
+  providerReference String?
+  paymentMethod     String?
+  status            String    @default("PENDING")
+  amount            Int
+  responsePayload   String?
+  createdAt         DateTime  @default(now())
+}
+
+model PaymentEvent {
+  id              String    @id @default(cuid())
+  provider        String    @default("mock")
+  providerEventId String    @unique
+  donationId      String?
+  donation        Donation? @relation(fields: [donationId], references: [id], onDelete: SetNull)
+  eventType       String
+  status          String
+  receivedAt      DateTime  @default(now())
+  processedAt     DateTime?
+  payloadRaw      String?
+}
+
+model Disbursement {
+  id               String                 @id @default(cuid())
+  programId        String
+  program          Program                @relation(fields: [programId], references: [id])
+  amount           Int
+  description      String
+  categoryLabel    String?
+  beneficiaryCount Int                    @default(0)
+  status           String                 @default("DRAFT") // DRAFT, SUBMITTED, APPROVED, POSTED, REJECTED
+  submittedBy      String
+  approvedBy       String?
+  postedAt         DateTime?
+  evidenceNotes    String?
+  createdAt        DateTime               @default(now())
+  updatedAt        DateTime               @updatedAt
+  evidences        DisbursementEvidence[]
+
+  @@index([programId, status, postedAt])
+}
+
+model DisbursementEvidence {
+  id             String       @id @default(cuid())
+  disbursementId String
+  disbursement   Disbursement @relation(fields: [disbursementId], references: [id], onDelete: Cascade)
+  mediaUrl       String
+  caption        String?
+  isPublic       Boolean      @default(true)
+  createdAt      DateTime     @default(now())
+}
+
+model Report {
+  id             String    @id @default(cuid())
+  slug           String    @unique
+  title          String
+  summary        String
+  periodStart    DateTime
+  periodEnd      DateTime
+  status         String    @default("DRAFT") // DRAFT, PUBLISHED
+  totalCollected Int       @default(0)
+  totalDisbursed Int       @default(0)
+  documentUrl    String?
+  publishedAt    DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+}
+
+model Article {
+  id          String    @id @default(cuid())
+  slug        String    @unique
+  title       String
+  excerpt     String
+  body        String
+  coverImage  String?
+  status      String    @default("DRAFT") // DRAFT, PUBLISHED
+  publishedAt DateTime?
+  authorName  String?   @default("Tim Ar-Rahmah Care")
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model ImpactStory {
+  id               String   @id @default(cuid())
+  slug             String   @unique
+  title            String
+  summary          String
+  body             String
+  beneficiaryLabel String
+  coverImage       String?
+  consentVerified  Boolean  @default(true)
+  status           String   @default("DRAFT") // DRAFT, PUBLISHED
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model OrganizationSetting {
+  id                     String   @id @default("default")
+  organizationName       String   @default("Ar-Rahmah Care")
+  tagline                String   @default("Amanah, Transparan, Berkelanjutan")
+  address                String?  @default("Kompleks Yayasan Ar-Rahmah Sulawesi, Makassar, Sulawesi Selatan")
+  email                  String?  @default("care@arrahmahsulawesi.org")
+  phone                  String?  @default("0411-XXXXXXX")
+  whatsapp               String?  @default("0812XXXXXXXX")
+  socialInstagram        String?  @default("https://instagram.com")
+  socialYoutube          String?  @default("https://youtube.com")
+  socialFacebook         String?  @default("https://facebook.com")
+  legalDisclosure        String?  @default("Unit filantropi dan sosial di bawah naungan Yayasan Ar-Rahmah Sulawesi. Program dan legalitas perizinan terus diperbarui untuk kepatuhan regulasi.")
+  verifiedBankName       String?  @default("Bank Syariah Indonesia (BSI)")
+  verifiedAccountName    String?  @default("Ar-Rahmah Care - Yayasan Ar-Rahmah Sulawesi")
+  verifiedAccountNo      String?  @default("7192-8831-22 (Demo Sandbox)")
+  qrisImageUrl           String?
+  isQrisActive           Boolean  @default(true)
+  isBankTransferActive   Boolean  @default(false)
+  donationMinAmount      Int      @default(10000)
+  donationMaxAmount      Int      @default(100000000)
+  featureZakat           Boolean  @default(false) // Nonaktif default hingga verifikasi izin
+  featureWakaf           Boolean  @default(false) // Nonaktif default hingga verifikasi izin
+  featureQurban          Boolean  @default(false) // Nonaktif default
+  demoMode               Boolean  @default(true)
+  updatedAt              DateTime @updatedAt
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  actorId   String?
+  actor     User?    @relation(fields: [actorId], references: [id], onDelete: SetNull)
+  action    String
+  entity    String
+  entityId  String?
+  details   String?
+  ipAddress String?
+  createdAt DateTime @default(now())
+}
